@@ -4,11 +4,9 @@ sys.path.append("../common")
 import utils
 
 
-def read_input_file():
-  file = open(".\input.txt", "r")
-  content = file.read()
+def get_depths():
+  content = utils.read_input_file()
   contentList = content.splitlines()
-  file.close()
   return list(map(int, contentList))
 
 
@@ -25,9 +23,9 @@ def split_windows(depthList):
 
 
 def main():
-  utils.displayHeaderForDay(1)
+  utils.display_header_for_day(1)
   # Star 1
-  depthList = read_input_file()
+  depthList = get_depths()
   print(f'Result Star 1: {count_increase(depthList)}')
 
   # Star 2
