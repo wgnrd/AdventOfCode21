@@ -13,22 +13,15 @@ def read_input_file():
 
 
 def count_increase(depthList):
-  count = 0
-  for i, j in enumerate(depthList):
-    if (i > 0 and (depthList[i] > depthList[i - 1])):
-      count += 1
-
-  return count
+  return len([(i, j)
+              for i, j in enumerate(depthList)
+              if (i > 0) and (depthList[i] > depthList[i - 1])])
 
 
 def split_windows(depthList):
-  windowList = []
-
-  for i, j in enumerate(depthList):
-    if ((i + 2) < len(depthList)):
-      windowList.append(depthList[i] + depthList[i + 1] + depthList[i + 2])
-
-  return windowList
+  return [(depthList[i] + depthList[i + 1] + depthList[i + 2])
+          for i, j in enumerate(depthList)
+          if (i + 2) < len(depthList)]
 
 
 def main():
