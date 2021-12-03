@@ -11,9 +11,10 @@ class Direction(Enum):
   down = 3
 
 
-dx = 0
-dy = 0
-aim = 0
+class Position:
+  dx = 0
+  dy = 0
+  aim = 0
 
 
 def get_instructions():
@@ -21,56 +22,49 @@ def get_instructions():
   return content.splitlines()
 
 
-def move(direction: Direction, distance: int):
-  global dy, dx
-
+def move(direction: Direction, distance: int, p: Position):
   if direction == Direction.down:
-    dy += distance
+    p.dy += distance
   elif direction == Direction.up:
-    dy = max(dy - distance, 0)
+    p.dy = max(p.dy - distance, 0)
   elif direction == Direction.forward:
-    dx += distance
+    p.dx += distance
 
 
-def move_aim(direction: Direction, distance: int):
-  global dy, dx, aim
-
+def move_aim(direction: Direction, distance: int, p: Position):
   if direction == Direction.down:
-    aim += distance
+    p.aim += distance
   elif direction == Direction.up:
-    aim = max(aim - distance, 0)
+    p.aim = max(p.aim - distance, 0)
   elif direction == Direction.forward:
-    dx += distance
-    dy += aim * distance
+    p.dx += distance
+    p.dy += p.aim * distance
 
 
-def handle_instruction(instruction):
+def handle_instruction(instruction: str, postition: Position):
   inst_pair = instruction.split()
-  move(Direction[inst_pair[0]], int(inst_pair[1]))
+  move(Direction[inst_pair[0]], int(inst_pair[1]), postition)
 
 
-def handle_aim_instructions(instruction):
+def handle_aim_instructions(instruction: str, position: Position):
   inst_pair = instruction.split()
-  move_aim(Direction[inst_pair[0]], int(inst_pair[1]))
+  move_aim(Direction[inst_pair[0]], int(inst_pair[1]), position)
 
 
-def calculate_position(instructions) -> int:
-  reset_position()
-  list(map(handle_instruction, instructions))
-  return dx * dy
+def calculate_position(instructions: str) -> int:
+  position = Position()
+  list(
+      map(lambda instruction: handle_instruction(instruction, position),
+          instructions))
+  return position.dx * position.dy
 
 
-def calculate_aim(instructions) -> int:
-  reset_position()
-  list(map(handle_aim_instructions, instructions))
-  return dx * dy
-
-
-def reset_position():
-  global dy, dx, aim
-  dx = 0
-  dy = 0
-  aim = 0
+def calculate_aim(instructions: str) -> int:
+  position = Position()
+  list(
+      map(lambda instruction: handle_aim_instructions(instruction, position),
+          instructions))
+  return position.dx * position.dy
 
 
 def main():
