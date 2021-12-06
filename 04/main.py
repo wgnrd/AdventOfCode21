@@ -19,7 +19,8 @@ class BingoInput:
 
     for board in tmpSplit:
       tmpBoard: List[int] = []
-      self.markings.append([[False] * 5] * 5)
+      self.markings.append([[False] * 5, [False] * 5, [False] * 5, [False] * 5,
+                            [False] * 5])
       for line in board.split('\n'):
         bar = list(filter(None, line.split(' ')))
         tmpBoard.append(bar)
@@ -45,7 +46,7 @@ class BingoInput:
     for i in range(len(board)):
       for j in range(len(board[i])):
         if not markings[i][j]:
-          score += board[i][j]
+          score += int(board[i][j])
 
     return score
 
@@ -55,14 +56,11 @@ class BingoInput:
       for i in range(len(board)):
         for j in range(len(board[i])):
           if board[i][j] == drawnNumber:
-            # ERROR: markings affect whole column instead of cell
-            print(idx, i, j, drawnNumber)
             self.markings[idx][i][j] = True
-            print(self.markings[idx][i])
-            print(self.markings[idx])
 
       if self.is_winning_board(self.markings[idx]):
-        return self.calculate_score(self.boards[idx], self.markings[idx])
+        return self.calculate_score(self.boards[idx],
+                                    self.markings[idx]) * int(drawnNumber)
 
   # finds first winner and returns the score
   def find_first_winner(self) -> int:
@@ -77,8 +75,9 @@ def main():
 
   bi = BingoInput()
   bi.parse_input()
+
   # Star 1
-  print(f'Result Star 1: {bi.find_first_winner()}')
+  print(f'Result Stapyr 1: {bi.find_first_winner()}')
 
   # Star 2
   # print(f'Result Star 2: {}')
