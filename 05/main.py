@@ -77,7 +77,7 @@ def nondiagonal_dangers() -> int:
 
 
 def main():
-  utils.display_header_for_day(3)
+  utils.display_header_for_day(5)
   get_report()
 
   # # Star 1

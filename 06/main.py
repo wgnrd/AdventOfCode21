@@ -27,8 +27,7 @@ def calculate_fish(days: int) -> int:
 
 
 def main():
-  utils.display_header_for_day(3)
-  get_report()
+  utils.display_header_for_day(6)
 
   # # Star 1
   print(f'Result Star 1: {calculate_fish(80)}')
